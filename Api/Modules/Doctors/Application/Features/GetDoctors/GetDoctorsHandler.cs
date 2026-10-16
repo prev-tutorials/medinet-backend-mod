@@ -6,8 +6,7 @@ namespace Api.Modules.Doctors.Application.Features.GetDoctors;
 
 public class GetDoctorsHandler(
     IDoctorRepository repository
-)
-: IRequestHandler<GetDoctorsQuery, DoctorResponse[]>
+): IRequestHandler<GetDoctorsQuery, DoctorResponse[]>
 {
     private readonly IDoctorRepository _repository = repository;
 
@@ -17,6 +16,11 @@ public class GetDoctorsHandler(
     )
     {
         var doctores = await _repository.GetAllAsync(ct);
+
+        if(query.Id != null)
+            doctores = doctores
+                .Where(e => e.Id == query.Id)
+                .ToArray();
         
         return doctores
             .Select(d => d.ToResponse())

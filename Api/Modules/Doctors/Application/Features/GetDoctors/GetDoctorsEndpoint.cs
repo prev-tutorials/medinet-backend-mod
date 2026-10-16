@@ -9,12 +9,12 @@ public static class GetDoctorsEndpoint
 
     
     private static async Task<IResult> GetDoctors(
-
+        Guid? Id,
         ISender sender,
         CancellationToken ct
     )
     {
-        var query = new GetDoctorsQuery();
+        var query = new GetDoctorsQuery(Id);
         var result = await sender.Send(query, ct);
         return Results.Ok(result);
     }
