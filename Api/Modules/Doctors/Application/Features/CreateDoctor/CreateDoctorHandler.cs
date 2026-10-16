@@ -2,6 +2,7 @@ using Api.Modules.Doctors.Application.Contracts;
 using Api.Modules.Doctors.Domain;
 using Api.Modules.Doctors.Domain.ValueObjects;
 using Api.Modules.Shared.Domain;
+using FluentValidation;
 using MediatR;
 
 namespace Api.Modules.Doctors.Application.Features.CreateDoctor;
@@ -12,7 +13,6 @@ public class CreateDoctorHandler(
 ): IRequestHandler<CreateDoctorCommand, Guid>
     {
         private readonly IDoctorRepository _repository = repository;
-
         public async Task<Guid> Handle(
             CreateDoctorCommand command,
             CancellationToken ct
@@ -20,7 +20,7 @@ public class CreateDoctorHandler(
         {
             var person = Person.Create(
                 command.Dni,
-                command.FirsName,
+                command.FirstName,
                 command.LastName,
                 command.BirthDate,
                 command.Email,

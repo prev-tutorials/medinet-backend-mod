@@ -19,7 +19,7 @@ public static class CreateDoctorEndpoint
             request.Speciality,
             request.NRegister,
             request.Dni,
-            request.FirsName,
+            request.FirstName,
             request.LastName,
             request.BirthDate,
             request.Phone,

@@ -1,5 +1,3 @@
-
-
 using Api.Modules.Doctors;
 using Api.Modules.Shared;
 
@@ -24,4 +22,5 @@ app.UseSwaggerUI(
 );
 
 app.DoctorsEndpoints();
+app.UseExceptionHandler();
 app.Run();

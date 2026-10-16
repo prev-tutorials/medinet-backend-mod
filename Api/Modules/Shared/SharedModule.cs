@@ -1,4 +1,8 @@
+using Api.Modules.Shared.Application.Behaviors;
+using Api.Modules.Shared.Application.Exceptions;
 using Api.Modules.Shared.Infrastructure.Persistence;
+using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Modules.Shared;
@@ -20,6 +24,12 @@ public static class SharedModule
             cfg.RegisterServicesFromAssembly(typeof(SharedModule).Assembly)
         );
 
+        services.AddValidatorsFromAssembly(typeof(SharedModule).Assembly);
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        // services.AddExceptionHandler<ValidationExceptionHandler>();
+        services.AddExceptionHandler<CustomExceptionHandler>();
+        services.AddProblemDetails();
         return services;
     }
 }

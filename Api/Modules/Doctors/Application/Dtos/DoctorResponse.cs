@@ -1,5 +1,4 @@
 using Api.Modules.Doctors.Domain;
-using Api.Modules.Doctors.Domain.ValueObjects;
 using Api.Modules.Shared.Application.Dtos;
 
 namespace Api.Modules.Doctors.Application.Dtos;

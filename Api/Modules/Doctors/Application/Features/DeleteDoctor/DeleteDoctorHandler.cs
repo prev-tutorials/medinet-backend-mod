@@ -14,7 +14,7 @@ public class DeleteDoctorHandler(IDoctorRepository repository)
     )
     {
         var doctor = await _repository.GetById(command.Id, ct) 
-            ?? throw new ArgumentException("Doctor not found", nameof(command.Id));
+            ?? throw new KeyNotFoundException($"Doctor with id {command.Id} not found");
 
         var deletedDoctor = await _repository.DeleteAsync(doctor,ct);
         return deletedDoctor.Id;
