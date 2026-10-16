@@ -1,5 +1,7 @@
 using Api.Modules.Doctors.Application.Contracts;
 using Api.Modules.Doctors.Application.Features.CreateDoctor;
+using Api.Modules.Doctors.Application.Features.DeleteDoctor;
+using Api.Modules.Doctors.Application.Features.GetDoctors;
 using Api.Modules.Doctors.Infrastructure.Repository;
 
 namespace Api.Modules.Doctors;
@@ -23,9 +25,11 @@ public static class DoctorsModule
             .MapGroup("api/v1/doctors")
             .WithTags("Doctors");
 
+
+        group.MapGetDoctors();
         group.MapCreateDoctor();
         // group.MapUpdateDoctor();
-        // group.DeleteDoctor();
+        group.MapDeleteDoctor();
 
         return endpoints;
     }

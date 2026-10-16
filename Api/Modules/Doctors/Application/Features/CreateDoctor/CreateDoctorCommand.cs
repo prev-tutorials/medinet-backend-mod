@@ -27,3 +27,6 @@ public record CreateDoctorCommand(
     string? Email,
     string? Address
 ):IRequest<Guid>;
+
+
+//todo validation command

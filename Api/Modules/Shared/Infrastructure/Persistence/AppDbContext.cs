@@ -23,6 +23,8 @@ public class AppDbContext(
         modelBuilder.ApplyConfigurationsFromAssembly(
             typeof(AppDbContext).Assembly
         );
+
+        modelBuilder.ApplySoftDeleteFilter();
     }
 
 
