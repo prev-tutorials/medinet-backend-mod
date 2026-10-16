@@ -45,15 +45,9 @@ public class Person:Entity
             address
         );
 
-        DateTime? birth = null;
-
-        if (!string.IsNullOrWhiteSpace(birthDate))
-            birth = DateTime.ParseExact(
-                birthDate,
-                ["dd/MM/yyyy", "d/M/yyyy", "yyyy-MM-dd"],
-                CultureInfo.InvariantCulture,
-                DateTimeStyles.None
-            );
+        DateTime? birth = (!string.IsNullOrWhiteSpace(birthDate))
+            ? ParseBirthDate(birthDate)
+            : null;
 
 
         return new Person(
@@ -64,4 +58,36 @@ public class Person:Entity
             contact
         );
     }
+
+
+    public void Update(
+        string? dni,
+        string? firstName,
+        string? lastName,
+        string? birthDate,
+        string? Email,
+        string? Phone,
+        string? Address
+    )
+    {
+        if(dni != null) Dni = dni;
+        if(firstName != null) FirstName = firstName;
+        if(lastName != null) LastName = lastName;
+        if (!string.IsNullOrWhiteSpace(birthDate))
+            BirthDate = ParseBirthDate(birthDate);
+
+        PersonContact.Update(
+            Email, 
+            Phone, 
+            Address
+        );
+    }
+
+
+    private static DateTime? ParseBirthDate(string birthDate)
+        => DateTime.ParseExact(
+            birthDate,
+            ["dd/MM/yyyy", "d/M/yyyy", "yyyy-MM-dd"],
+            CultureInfo.InvariantCulture, DateTimeStyles.None
+        );
 }

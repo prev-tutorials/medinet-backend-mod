@@ -43,4 +43,19 @@ public class Doctor:Entity
             person
         );
     }
+
+
+
+    public void Update(
+        Speciality? speciality,
+        string? nRegister,
+        bool? active
+        // Person? person 
+    )
+    {
+        if(speciality != null) Speciality = speciality;
+        if(nRegister != null) NRegister = nRegister;
+        if(active.HasValue) Active = active.Value;
+        // if(person != null) Person = person;
+    }
 }

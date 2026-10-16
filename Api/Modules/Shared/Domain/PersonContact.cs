@@ -32,4 +32,16 @@ public class PersonContact: Entity
             address
         );
     }
+
+
+    public void Update(
+        string? email,
+        string? phone,
+        string? address
+    )
+    {
+        if(email != null) Email = email;
+        if(phone != null) Phone = phone;
+        if(address != null) Address = address;
+    }
 }
