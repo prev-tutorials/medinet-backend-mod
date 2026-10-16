@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace Api.Modules.Shared.Domain;
 
 public class Person:Entity
@@ -43,11 +45,22 @@ public class Person:Entity
             address
         );
 
+        DateTime? birth = null;
+
+        if (!string.IsNullOrWhiteSpace(birthDate))
+            birth = DateTime.ParseExact(
+                birthDate,
+                ["dd/MM/yyyy", "d/M/yyyy", "yyyy-MM-dd"],
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None
+            );
+
+
         return new Person(
             dni,
             firstName,
             lastName,
-            !string.IsNullOrWhiteSpace(birthDate) ? DateTime.Parse(birthDate) : null,
+            birth,
             contact
         );
     }

@@ -1,3 +1,4 @@
+using Api.Modules.Doctors.Domain.ValueObjects;
 using Api.Modules.Shared.Domain;
 
 namespace Api.Modules.Doctors.Domain;
@@ -5,7 +6,7 @@ namespace Api.Modules.Doctors.Domain;
 
 public class Doctor:Entity
 {
-    public string Speciality { get; private set; } = null!;
+    public Speciality Speciality { get; private set; } = null!;
     public string NRegister { get; private set; } = null!;
     public bool Active { get; private set; }
     public Guid PersonId {get; private set; }
@@ -14,7 +15,7 @@ public class Doctor:Entity
     public Doctor(){}
 
     private Doctor(
-        string speciality,
+        Speciality speciality,
         string nRegister,
         bool active,
         Person person
@@ -29,7 +30,7 @@ public class Doctor:Entity
 
 
     public static Doctor Create(
-        string speciality,
+        Speciality speciality,
         string nRegister,
         bool active,
         Person person

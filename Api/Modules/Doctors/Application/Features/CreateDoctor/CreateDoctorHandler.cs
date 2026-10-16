@@ -1,5 +1,6 @@
 using Api.Modules.Doctors.Application.Contracts;
 using Api.Modules.Doctors.Domain;
+using Api.Modules.Doctors.Domain.ValueObjects;
 using Api.Modules.Shared.Domain;
 using MediatR;
 
@@ -28,7 +29,7 @@ public class CreateDoctorHandler(
             );
 
             var doctor = Doctor.Create(
-                command.Speciality,
+                Speciality.From(command.Speciality),
                 command.NRegister,
                 false,
                 person

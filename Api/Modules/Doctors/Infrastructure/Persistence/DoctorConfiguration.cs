@@ -1,4 +1,5 @@
 using Api.Modules.Doctors.Domain;
+using Api.Modules.Doctors.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,5 +20,12 @@ public class DoctorConfiguracion : IEntityTypeConfiguration<Doctor>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasIndex(x => x.PersonId).IsUnique();
+
+        builder.Property(x => x.Speciality)
+            .HasConversion(
+                s=>s.Value,
+                v => Speciality.From(v)
+            ).HasMaxLength(100)
+            .IsRequired();
     }
 }
