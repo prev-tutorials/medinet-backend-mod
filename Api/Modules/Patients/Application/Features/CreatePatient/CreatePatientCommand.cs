@@ -5,14 +5,13 @@ using MediatR;
 namespace Api.Modules.Patients.Application.Features.CreatePatient;
 
 public record CreatePatientRequest(
-    string Nhc
+    string Nhc,
+    CreatePersonRequest Person
 );
 
 
 public record CreatePatientCommand(
-    Guid Id,
-    CreatePatientRequest Patient,
-    CreatePersonRequest Person
+    CreatePatientRequest Patient
 ):IRequest<Guid>;
 
 
@@ -24,7 +23,8 @@ public class CreatePatientValidator : AbstractValidator<CreatePatientCommand>
             .NotEmpty().WithMessage("Nhc is required")
             .MaximumLength(150);
 
-        RuleFor(x => x.Person)
+        RuleFor(x => x.Patient.Person)
+            .NotNull().WithMessage("Person data is required")
             .SetValidator(new CreatePersonRequestValidator());
     }
 } 

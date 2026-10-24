@@ -12,6 +12,7 @@ public class CreateDoctorHandler(
 ): IRequestHandler<CreateDoctorCommand, Guid>
     {
         private readonly IDoctorRepository _repository = repository;
+        
         public async Task<Guid> Handle(
             CreateDoctorCommand command,
             CancellationToken ct

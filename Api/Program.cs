@@ -1,4 +1,5 @@
 using Api.Modules.Doctors;
+using Api.Modules.Patients;
 using Api.Modules.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.SharedServices(builder.Configuration);
-builder.Services.DoctorsService();
+builder.Services.DoctorServices();
+builder.Services.PatientServices();
 
 var app = builder.Build();
 
@@ -21,6 +23,8 @@ app.UseSwaggerUI(
     o => o.SwaggerEndpoint("/openapi/v1.json", "Api")
 );
 
-app.DoctorsEndpoints();
+app.DoctorEndpoints();
+app.PatientEndpoints();
+
 app.UseExceptionHandler();
 app.Run();

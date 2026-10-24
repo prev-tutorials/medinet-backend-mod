@@ -9,7 +9,7 @@ namespace Api.Modules.Doctors;
 
 public static class DoctorsModule
 {
-    public static IServiceCollection DoctorsService(
+    public static IServiceCollection DoctorServices(
         this IServiceCollection services
     )
     {
@@ -18,18 +18,18 @@ public static class DoctorsModule
     }
     
 
-    public static IEndpointRouteBuilder DoctorsEndpoints(
+    public static IEndpointRouteBuilder DoctorEndpoints(
         this IEndpointRouteBuilder endpoints
     )
     {
-        var group = endpoints
+        endpoints
             .MapGroup("api/v1/doctors")
             .WithTags("Doctors");
 
-        group.MapGetDoctors();
-        group.MapCreateDoctor();
-        group.MapUpdateDoctor();
-        group.MapDeleteDoctor();
+        endpoints.MapGetDoctors();
+        endpoints.MapCreateDoctor();
+        endpoints.MapUpdateDoctor();
+        endpoints.MapDeleteDoctor();
 
         return endpoints;
     }

@@ -12,7 +12,7 @@ public class Doctor:Entity
     public Guid PersonId {get; private set; }
     public Person Person { get; private set; } = null!;
 
-    public Doctor(){}
+    protected Doctor(){}
 
     private Doctor(
         Speciality speciality,
@@ -36,7 +36,7 @@ public class Doctor:Entity
         Person person
     )
     {
-        return new Doctor(
+        return new(
             speciality,
             nRegister,
             active,

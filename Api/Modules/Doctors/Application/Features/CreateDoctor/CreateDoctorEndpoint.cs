@@ -9,17 +9,14 @@ public static class CreateDoctorEndpoint
         this IEndpointRouteBuilder endpoints
     ) => endpoints.MapPost("/", CreateDoctor);
 
+
     private static async Task<IResult> CreateDoctor(
         CreateDoctorRequest request,
         ISender sender,
         CancellationToken ct
     )
     {
-        var command = new CreateDoctorCommand(
-            Guid.NewGuid(),
-            request
-        );
-
+        var command = new CreateDoctorCommand(request);
         var doctorId = await sender.Send(command, ct);
         return Results.Ok(new{id = doctorId});
     }

@@ -12,7 +12,6 @@ public record CreateDoctorRequest(
 
 
 public record CreateDoctorCommand(
-    Guid Id,
     CreateDoctorRequest Doctor
 ):IRequest<Guid>;
 
@@ -30,6 +29,7 @@ public class CreateDoctorValidator : AbstractValidator<CreateDoctorCommand>
             .MaximumLength(150);
 
         RuleFor(x => x.Doctor.Person)
+            .NotNull().WithMessage("Person data is required")
             .SetValidator(new CreatePersonRequestValidator());
     }
 } 
