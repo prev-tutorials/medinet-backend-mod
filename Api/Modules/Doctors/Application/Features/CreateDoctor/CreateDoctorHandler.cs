@@ -2,7 +2,6 @@ using Api.Modules.Doctors.Application.Contracts;
 using Api.Modules.Doctors.Domain;
 using Api.Modules.Doctors.Domain.ValueObjects;
 using Api.Modules.Shared.Domain;
-using FluentValidation;
 using MediatR;
 
 namespace Api.Modules.Doctors.Application.Features.CreateDoctor;
@@ -18,24 +17,27 @@ public class CreateDoctorHandler(
             CancellationToken ct
         )
         {
-            var person = Person.Create(
-                command.Dni,
-                command.FirstName,
-                command.LastName,
-                command.BirthDate,
-                command.Email,
-                command.Phone,
-                command.Address 
+            var doctor = command.Doctor;
+            var person = command.Doctor.Person;
+
+            var newPerson = Person.Create(
+                person.Dni,
+                person.FirstName,
+                person.LastName,
+                person.BirthDate,
+                person.Email,
+                person.Phone,
+                person.Address 
             );
 
-            var doctor = Doctor.Create(
-                Speciality.From(command.Speciality),
-                command.NRegister,
+            var newDoctor = Doctor.Create(
+                Speciality.From(doctor.Speciality),
+                doctor.NRegister,
                 false,
-                person
+                newPerson
             );
 
-            var newDoctor = await _repository.AddAsync(doctor, ct);
-            return newDoctor.Id;
+            var response = await _repository.AddAsync(newDoctor, ct);
+            return response.Id;
         }
     }

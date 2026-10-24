@@ -15,30 +15,34 @@ public class UpdateDoctorHandler(
         CancellationToken ct
     )
     {
-        var doctor = await _repository.GetById(command.Id, ct)
+        var doctor = command.Doctor;
+        var person = command.Doctor.Person;
+
+        var searchDoctor = await _repository.GetById(command.Id, ct)
             ?? throw new ArgumentException("Doctor with id not found");
 
-        var specialityParsed = !string.IsNullOrWhiteSpace(command.Speciality)
-            ? Speciality.From(command.Speciality)
+        var specialityParsed = !string.IsNullOrWhiteSpace(doctor.Speciality)
+            ? Speciality.From(doctor.Speciality)
             : null;
 
-        doctor.Update(
+
+        searchDoctor.Person.Update(
+            person.Dni,
+            person.FirstName,
+            person.LastName,
+            person.BirthDate,
+            person.Email,
+            person.Phone,
+            person.Address
+        );
+
+        searchDoctor.Update(
             specialityParsed,
-            command.NRegister,
-            command.Active
+            doctor.NRegister,
+            doctor.Active
         );
 
-        doctor.Person.Update(
-            command.Dni,
-            command.FirstName,
-            command.LastName,
-            command.BirthDate,
-            command.Email,
-            command.Phone,
-            command.Address
-        );
-
-        var doctorUpdated = await _repository.UpdateAsync(doctor, ct);
+        var doctorUpdated = await _repository.UpdateAsync(searchDoctor, ct);
         return doctorUpdated.Id;
     }
 }

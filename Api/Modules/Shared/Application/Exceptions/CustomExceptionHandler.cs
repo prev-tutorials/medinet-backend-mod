@@ -1,16 +1,17 @@
+using Api.Modules.Shared.Application.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Modules.Shared.Application.Exceptions;
 
-//archivo centraliza los exceptions
+public record ErrorResponse(
+    bool Error,
+    string Title,
+    string[] Details,
+    int Status
+);
 
-public class ConflictException(string message) : Exception(message){}
-
-
-public class CustomExceptionHandler(IProblemDetailsService problemDetailsService) 
-: IExceptionHandler
+public class CustomExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext, 
@@ -18,56 +19,39 @@ public class CustomExceptionHandler(IProblemDetailsService problemDetailsService
         CancellationToken ct
     )
     {
-        ProblemDetails? problemDetails = null;
-
-
-        if (exception is ValidationException validationException)
+        var (status, title, details) = exception switch
         {
-            var errors = validationException.Errors
-                .GroupBy(e => e.PropertyName)
-                .ToDictionary(
-                    g => g.Key, 
-                    g => g.Select(e => e.ErrorMessage).ToArray()
-                );
+            ValidationException v => (
+                StatusCodes.Status400BadRequest,
+                "One or more validation errors occurred.",
+                v.Errors.Select(e => e.ErrorMessage).ToArray()),
 
-            problemDetails = new ValidationProblemDetails(errors)
-            {
-                Title  = "One or more validation errors occurred.",
-                Status = StatusCodes.Status400BadRequest,
-            };
-        }
+            KeyNotFoundException => (
+                StatusCodes.Status404NotFound,
+                "Not Found",
+                new[] { exception.Message }),
 
+            ConflictException => (
+                StatusCodes.Status409Conflict,
+                "Conflict",
+                new[] { exception.Message }),
 
-        if (exception is KeyNotFoundException)
-            problemDetails = new ProblemDetails
-            {
-                Title = "Not Found",
-                Status = StatusCodes.Status404NotFound,
-                Detail = exception.Message,
-            };
-            
+            _ => (0, string.Empty, Array.Empty<string>())
+        };
 
-        if (exception is ConflictException)
-            problemDetails = new ProblemDetails
-            {
-                Title  = "Conflict",
-                Status = StatusCodes.Status409Conflict,
-                Detail = exception.Message,
-            };
-
-
-        if(problemDetails == null)
+        if (status == 0)
             return false;
 
-        httpContext.Response.StatusCode = problemDetails.Status!.Value;
-
-        return await problemDetailsService.TryWriteAsync(
-            new ProblemDetailsContext
-            {
-                HttpContext    = httpContext,
-                ProblemDetails = problemDetails,
-                Exception      = exception
-            }
+        httpContext.Response.StatusCode = status;
+        await httpContext.Response.WriteAsJsonAsync(
+            new ErrorResponse(
+                true, 
+                title, 
+                details, 
+                status
+            ), ct
         );
+
+        return true;
     }
 }

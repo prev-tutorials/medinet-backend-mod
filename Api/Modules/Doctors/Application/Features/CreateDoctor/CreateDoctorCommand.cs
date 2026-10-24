@@ -1,33 +1,19 @@
-using System.ComponentModel.DataAnnotations;
+using Api.Modules.Shared.Dtos;
 using FluentValidation;
 using MediatR;
 
 namespace Api.Modules.Doctors.Application.Features.CreateDoctor;
 
-
 public record CreateDoctorRequest(
-    string Speciality,
     string NRegister,
-    string Dni,
-    string FirstName,
-    string LastName,
-    string? BirthDate,
-    string? Phone,
-    string? Email,
-    string? Address
+    string Speciality,
+    CreatePersonRequest Person
 );
+
 
 public record CreateDoctorCommand(
     Guid Id,
-    string Speciality,
-    string NRegister,
-    string Dni,
-    string FirstName,
-    string LastName,
-    string? BirthDate,
-    string? Phone,
-    string? Email,
-    string? Address
+    CreateDoctorRequest Doctor
 ):IRequest<Guid>;
 
 
@@ -35,30 +21,15 @@ public class CreateDoctorValidator : AbstractValidator<CreateDoctorCommand>
 {
     public CreateDoctorValidator()
     {
-        RuleFor(x => x.NRegister)
+        RuleFor(x => x.Doctor.NRegister)
             .NotEmpty().WithMessage("NRegister is required")
             .MaximumLength(150);
 
-        RuleFor(x => x.Speciality)
+        RuleFor(x => x.Doctor.Speciality)
             .NotEmpty()
             .MaximumLength(150);
 
-        RuleFor(x => x.Dni)
-            .NotEmpty().WithMessage("Dni is required")
-            .MinimumLength(10)
-            .MaximumLength(15).WithMessage("Dni must be 15 characters or less");
-
-        RuleFor(x => x.FirstName)
-            .NotEmpty()
-            .MaximumLength(150);
-
-        RuleFor(x => x.LastName)
-            .NotEmpty()
-            .MaximumLength(150);
-
-        RuleFor(x => x.Phone)
-            .NotEmpty()
-            .MaximumLength(15)
-            .When(x => x.Phone != null);
+        RuleFor(x => x.Doctor.Person)
+            .SetValidator(new CreatePersonRequestValidator());
     }
 } 

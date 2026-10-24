@@ -10,24 +10,17 @@ public static class CreateDoctorEndpoint
     ) => endpoints.MapPost("/", CreateDoctor);
 
     private static async Task<IResult> CreateDoctor(
+        CreateDoctorRequest request,
         ISender sender,
-        CreateDoctorRequest request
+        CancellationToken ct
     )
     {
         var command = new CreateDoctorCommand(
             Guid.NewGuid(),
-            request.Speciality,
-            request.NRegister,
-            request.Dni,
-            request.FirstName,
-            request.LastName,
-            request.BirthDate,
-            request.Phone,
-            request.Email,
-            request.Address
+            request
         );
 
-        var doctorId = await sender.Send(command);
+        var doctorId = await sender.Send(command, ct);
         return Results.Ok(new{id = doctorId});
     }
 }

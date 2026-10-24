@@ -19,16 +19,7 @@ public static class UpdateDoctorEndpoint
     {
         var command = new UpdateDoctorCommand(
             id,
-            request.Speciality,
-            request.NRegister,
-            request.Active,
-            request.Dni,
-            request.FirstName,
-            request.LastName,
-            request.BirthDate,
-            request.Phone,
-            request.Email,
-            request.Address
+            request
         );
 
         var result = await sender.Send(command, ct);
