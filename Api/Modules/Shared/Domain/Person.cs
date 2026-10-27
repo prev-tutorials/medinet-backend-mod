@@ -87,7 +87,8 @@ public class Person:Entity
     private static DateTime? ParseBirthDate(string birthDate)
         => DateTime.ParseExact(
             birthDate,
-            ["dd/MM/yyyy", "d/M/yyyy", "yyyy-MM-dd"],
-            CultureInfo.InvariantCulture, DateTimeStyles.None
+            ["yyyy-MM-dd"],
+            CultureInfo.InvariantCulture, 
+            DateTimeStyles.None
         );
 }

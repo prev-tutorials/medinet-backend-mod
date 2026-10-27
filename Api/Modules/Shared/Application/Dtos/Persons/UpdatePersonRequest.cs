@@ -1,6 +1,7 @@
+using Api.Modules.Shared.Application.Helpers;
 using FluentValidation;
 
-namespace Api.Modules.Shared.Dtos;
+namespace Api.Modules.Shared.Application.Dtos.Persons;
 
 public record UpdatePersonRequest(
     string? Dni,
@@ -37,5 +38,10 @@ public class UpdatePersonRequestValidator : AbstractValidator<UpdatePersonReques
         RuleFor(x => x.Email)
             .EmailAddress()
             .When(x => !string.IsNullOrWhiteSpace(x.Email));
+
+        RuleFor(x => x.BirthDate)
+            .Must(DateHelper.IsValidDate)
+            .WithMessage("BirthDate must be in format yyyy-MM-dd")
+            .When(x => !string.IsNullOrWhiteSpace(x.BirthDate));
     }
 }

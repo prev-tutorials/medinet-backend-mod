@@ -81,6 +81,10 @@ namespace Api.Modules.Shared.Infrastructure.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Nhc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("PersonId")
                         .HasColumnType("uniqueidentifier");
 

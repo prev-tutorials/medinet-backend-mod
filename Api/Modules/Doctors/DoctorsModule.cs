@@ -22,15 +22,15 @@ public static class DoctorsModule
         this IEndpointRouteBuilder endpoints
     )
     {
-        endpoints
+        var group = endpoints
             .MapGroup("api/v1/doctors")
             .WithTags("Doctors");
 
-        endpoints.MapGetDoctors();
-        endpoints.MapCreateDoctor();
-        endpoints.MapUpdateDoctor();
-        endpoints.MapDeleteDoctor();
+        group.MapGetDoctors();
+        group.MapCreateDoctor();
+        group.MapUpdateDoctor();
+        group.MapDeleteDoctor();
 
-        return endpoints;
+        return group;
     }
 }

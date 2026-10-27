@@ -13,7 +13,7 @@ public class DeletePatientHandler(IPatientRepository repository)
         CancellationToken ct
     )
     {
-        var patient = await _repository.GetById(command.Id, ct)
+        var patient = await _repository.GetByIdAsync(command.Id, ct)
             ?? throw new KeyNotFoundException($"Patient with id {command.Id} not found");
 
         var deletedPatient = await _repository.DeleteAsync(patient, ct);

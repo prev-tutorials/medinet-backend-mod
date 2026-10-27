@@ -5,7 +5,7 @@ using MediatR;
 public static class CreateDoctorEndpoint
 {
     
-    public static RouteHandlerBuilder MapCreateDoctor(
+    public static void MapCreateDoctor(
         this IEndpointRouteBuilder endpoints
     ) => endpoints.MapPost("/", CreateDoctor);
 

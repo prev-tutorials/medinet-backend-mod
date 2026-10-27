@@ -1,4 +1,4 @@
-using Api.Modules.Shared.Dtos;
+using Api.Modules.Shared.Application.Dtos.Persons;
 using FluentValidation;
 using MediatR;
 

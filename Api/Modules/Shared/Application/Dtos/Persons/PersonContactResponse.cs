@@ -1,7 +1,7 @@
 
 using Api.Modules.Shared.Domain;
 
-namespace Api.Modules.Shared.Application.Dtos;
+namespace Api.Modules.Shared.Application.Dtos.Persons;
 
 public record PersonContactResponse(
     Guid Id,

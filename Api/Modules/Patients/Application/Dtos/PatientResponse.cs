@@ -1,5 +1,5 @@
 using Api.Modules.Patients.Domain;
-using Api.Modules.Shared.Application.Dtos;
+using Api.Modules.Shared.Application.Dtos.Persons;
 
 namespace Api.Modules.Patients.Application.Dtos;
 

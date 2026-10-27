@@ -5,7 +5,7 @@ namespace Api.Modules.Patients.Application.Features.CreatePatient;
 
 public static class CreatePatientEndpoint
 {
-    public static RouteHandlerBuilder MapCreatePatient(
+    public static void MapCreatePatient(
         this  IEndpointRouteBuilder endpoints
     ) => endpoints.MapPost("/", CreatePatient);
 

@@ -8,7 +8,6 @@ public static class DeleteDoctorEndpoint
         => endpoints.MapDelete("/{id:guid}",DeleteDoctor);
 
 
-
     private static async Task<IResult> DeleteDoctor(
         Guid id,
         ISender sender,

@@ -22,15 +22,15 @@ public static class PatientModule
         this IEndpointRouteBuilder endpoints
     )
     {
-        endpoints
+        var group = endpoints
             .MapGroup("api/v1/patients")
             .WithTags("Patients");
 
-        endpoints.MapCreatePatient();
-        endpoints.MapGetPatients();
-        endpoints.MapUpdatePatient();
-        endpoints.MapDeletePatient();
+        group.MapGetPatients();
+        group.MapCreatePatient();
+        group.MapUpdatePatient();
+        group.MapDeletePatient();
 
-        return endpoints;
+        return group;
     }
 }
