@@ -1,5 +1,8 @@
 using Api.Modules.Patients.Application.Contracts;
 using Api.Modules.Patients.Application.Features.CreatePatient;
+using Api.Modules.Patients.Application.Features.DeletePatient;
+using Api.Modules.Patients.Application.Features.GetPatients;
+using Api.Modules.Patients.Application.Features.UpdatePatient;
 using Api.Modules.Patients.Infrastructure.Repositories;
 
 namespace Api.Modules.Patients;
@@ -24,6 +27,9 @@ public static class PatientModule
             .WithTags("Patients");
 
         endpoints.MapCreatePatient();
+        endpoints.MapGetPatients();
+        endpoints.MapUpdatePatient();
+        endpoints.MapDeletePatient();
 
         return endpoints;
     }

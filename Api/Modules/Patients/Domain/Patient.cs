@@ -31,4 +31,11 @@ public class Patient:Entity
             person
         );
     }
+
+    public void Update(
+        string? nhc
+    )
+    {
+        if(nhc != null) Nhc = nhc;
+    }
 }

@@ -18,7 +18,7 @@ public class UpdateDoctorHandler(
         var doctor = command.Doctor;
         var person = command.Doctor.Person;
 
-        var searchDoctor = await _repository.GetById(command.Id, ct)
+        var foundDoctor = await _repository.GetByIdAsync(command.Id, ct)
             ?? throw new ArgumentException("Doctor with id not found");
 
         var specialityParsed = !string.IsNullOrWhiteSpace(doctor.Speciality)
@@ -26,7 +26,7 @@ public class UpdateDoctorHandler(
             : null;
 
 
-        searchDoctor.Person.Update(
+        foundDoctor.Person.Update(
             person.Dni,
             person.FirstName,
             person.LastName,
@@ -36,13 +36,13 @@ public class UpdateDoctorHandler(
             person.Address
         );
 
-        searchDoctor.Update(
+        foundDoctor.Update(
             specialityParsed,
             doctor.NRegister,
             doctor.Active
         );
 
-        var doctorUpdated = await _repository.UpdateAsync(searchDoctor, ct);
+        var doctorUpdated = await _repository.UpdateAsync(foundDoctor, ct);
         return doctorUpdated.Id;
     }
 }

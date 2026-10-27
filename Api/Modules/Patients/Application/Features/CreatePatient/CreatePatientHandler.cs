@@ -35,7 +35,7 @@ public class CreatePatientHandler(
             newPerson
         );
 
-        var response = await _repository.AddAsync(newPatient, ct);
-        return response.Id;
+        var result = await _repository.AddAsync(newPatient, ct);
+        return result.Id;
     }
 }

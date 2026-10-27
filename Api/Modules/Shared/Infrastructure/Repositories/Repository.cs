@@ -20,7 +20,7 @@ public class Repository<T>(
         => await Query().ToArrayAsync(ct);
         
 
-    public async Task<T?> GetById(Guid id, CancellationToken ct)
+    public async Task<T?> GetByIdAsync(Guid id, CancellationToken ct)
         => await Query().FirstOrDefaultAsync(x => x.Id == id, ct);
     
 
