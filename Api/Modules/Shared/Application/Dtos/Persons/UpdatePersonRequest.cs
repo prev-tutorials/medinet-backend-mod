@@ -40,7 +40,7 @@ public class UpdatePersonRequestValidator : AbstractValidator<UpdatePersonReques
             .When(x => !string.IsNullOrWhiteSpace(x.Email));
 
         RuleFor(x => x.BirthDate)
-            .Must(DateHelper.IsValidDate)
+            .Must(DateHelper.IsValidStringDate)
             .WithMessage("BirthDate must be in format yyyy-MM-dd")
             .When(x => !string.IsNullOrWhiteSpace(x.BirthDate));
     }
