@@ -1,0 +1,6 @@
+{
+  "rootNamespace": "Api",
+  "modulesPath": "Api/Modules",
+  "featuresFolderName": "Features",
+  "ignoredDirectories": ["bin", "obj", ".git", ".nupkg"]
+}

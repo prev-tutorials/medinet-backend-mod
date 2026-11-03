@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Api.Modules.Doctors.Infrastructure.Persistence;
 
 
-public class DoctorConfiguracion : IEntityTypeConfiguration<Doctor>
+public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
 {
     public void Configure(EntityTypeBuilder<Doctor> builder)
     {

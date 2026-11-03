@@ -14,7 +14,7 @@ public record DoctorResponse(
 
 
 
-public static class DoctorResponseMapper
+public static class DoctorMapper
 {
     public static DoctorResponse ToResponse(this Doctor doctor)
         => new(

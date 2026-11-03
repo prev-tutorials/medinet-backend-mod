@@ -7,7 +7,7 @@ public static class DateHelper
     public static bool IsValidStringDate(string? birthDate)
     {
         if (string.IsNullOrWhiteSpace(birthDate)) 
-            return true;
+            return false;
 
         return DateTime.TryParseExact(
             birthDate,
@@ -19,3 +19,20 @@ public static class DateHelper
     }
 }
 
+
+public static class TimeHelper
+{
+    public static bool IsValidStringTime(string? time)
+    {
+        if (string.IsNullOrWhiteSpace(time)) 
+            return false;
+
+        return TimeOnly.TryParseExact(
+            time,
+            ["HH:mm:ss"],
+            CultureInfo.InvariantCulture,
+            DateTimeStyles.None,
+            out _
+        );
+    }
+}

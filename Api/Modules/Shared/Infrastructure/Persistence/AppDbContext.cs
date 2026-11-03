@@ -1,3 +1,4 @@
+using Api.Modules.Appointments.Domain;
 using Api.Modules.Doctors.Domain;
 using Api.Modules.Patients.Domain;
 using Api.Modules.Shared.Domain;
@@ -16,6 +17,7 @@ public class AppDbContext(
     public DbSet<Person> People => Set<Person>();
     public DbSet<Patient> Patients => Set<Patient>();
     public DbSet<Doctor> Doctors => Set<Doctor>();
+    public DbSet<Appointment> Appointments => Set<Appointment>();
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

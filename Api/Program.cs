@@ -1,3 +1,4 @@
+using Api.Modules.Appointments;
 using Api.Modules.Doctors;
 using Api.Modules.Patients;
 using Api.Modules.Shared;
@@ -9,6 +10,7 @@ builder.Services.AddOpenApi();
 builder.Services.SharedServices(builder.Configuration);
 builder.Services.DoctorServices();
 builder.Services.PatientServices();
+builder.Services.AppointmentServices();
 
 var app = builder.Build();
 
@@ -25,6 +27,7 @@ app.UseSwaggerUI(
 
 app.DoctorEndpoints();
 app.PatientEndpoints();
+app.AppointmentEndpoints();
 
 app.UseExceptionHandler();
 app.Run();
