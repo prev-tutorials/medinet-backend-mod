@@ -1,7 +1,6 @@
-
-
 using Api.Modules.Appointments.Application.Contracts;
 using Api.Modules.Appointments.Application.Features.CreateAppointment;
+using Api.Modules.Appointments.Application.Features.DeleteAppointments;
 using Api.Modules.Appointments.Application.Features.GetAppointments;
 using Api.Modules.Appointments.Infrastructure.Repositories;
 
@@ -29,7 +28,7 @@ public static class AppointmentModule
         group.MapGetAppointments();
         group.MapCreateAppointment();
         // group.MapUpdateDoctor();
-        // group.MapDeleteDoctor();
+        group.MapDeleteAppointments();
 
         return group;
     }
