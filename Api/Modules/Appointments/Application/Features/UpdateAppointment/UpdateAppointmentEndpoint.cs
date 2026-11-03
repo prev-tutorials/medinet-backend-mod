@@ -4,7 +4,7 @@ namespace Api.Modules.Appointments.Application.Features.UpdateAppointment;
 
 public static class UpdateAppointmentEndpoint
 {
-    public static void MapUpdateAppointments(this IEndpointRouteBuilder endpoints)
+    public static void MapUpdateAppointment(this IEndpointRouteBuilder endpoints)
         => endpoints.MapPatch("/{id:guid}", UpdateAppointment);
 
     private static async Task<IResult> UpdateAppointment(

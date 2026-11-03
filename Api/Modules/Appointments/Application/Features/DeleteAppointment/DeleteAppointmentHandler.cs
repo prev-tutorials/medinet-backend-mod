@@ -1,16 +1,16 @@
 using Api.Modules.Appointments.Application.Contracts;
 using MediatR;
 
-namespace Api.Modules.Appointments.Application.Features.DeleteAppointments;
+namespace Api.Modules.Appointments.Application.Features.DeleteAppointment;
 
-public class DeleteAppointmentsHandler(
+public class DeleteAppointmentHandler(
     IAppointmentRepository repository
-): IRequestHandler<DeleteAppointmentsCommand, Guid>
+): IRequestHandler<DeleteAppointmentCommand, Guid>
 {
     private readonly IAppointmentRepository _repository = repository;
 
     public async Task<Guid> Handle(
-        DeleteAppointmentsCommand command,
+        DeleteAppointmentCommand command,
         CancellationToken ct
     )
     {
