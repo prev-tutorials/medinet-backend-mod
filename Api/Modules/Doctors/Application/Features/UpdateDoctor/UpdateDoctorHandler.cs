@@ -25,7 +25,6 @@ public class UpdateDoctorHandler(
             ? Speciality.From(doctor.Speciality)
             : null;
 
-
         foundDoctor.Person.Update(
             person.Dni,
             person.FirstName,
