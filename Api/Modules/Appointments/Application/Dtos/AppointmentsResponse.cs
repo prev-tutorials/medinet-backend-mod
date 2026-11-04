@@ -4,6 +4,7 @@ namespace Api.Modules.Appointments.Application.Dtos;
 
 
 public record AppointmentResponse(
+    Guid Id,
     Guid DoctorId,
     Guid PatientId,
     DateOnly Date,
@@ -16,6 +17,7 @@ public static class AppointmentMapper
 {
     public static AppointmentResponse ToResponse(this Appointment appointment)
         => new(
+            appointment.Id,
             appointment.DoctorId,
             appointment.PatientId,
             appointment.Date,

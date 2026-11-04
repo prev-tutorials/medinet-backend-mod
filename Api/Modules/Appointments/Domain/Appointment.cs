@@ -64,6 +64,25 @@ public class Appointment:Entity
     }
 
 
+
+    public void Update(
+        Guid? doctorId,
+        Guid? patientId,
+        DateOnly? date,
+        TimeOnly? time,
+        string? reason,
+        AppointmentStatus? status
+    )
+    {
+        if(doctorId != null) DoctorId = doctorId.Value;
+        if(patientId != null) PatientId = patientId.Value;
+        if(date != null) Date = date.Value;
+        if(time != null) Time = time.Value;
+        if(reason != null) Reason = reason;
+        if(status != null) Status = status.Value;
+    }
+
+
     public void Cancel()
     {
         if (Status == AppointmentStatus.Completed)
