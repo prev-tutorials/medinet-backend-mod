@@ -23,13 +23,16 @@ public class UpdateDoctorValidator : AbstractValidator<UpdateDoctorCommand>
     {
         RuleFor(x => x.Doctor.NRegister)
             .NotEmpty().WithMessage("NRegister is required")
-            .MaximumLength(150);
+            .MaximumLength(150)
+            .When(x => !string.IsNullOrWhiteSpace(x.Doctor.NRegister));
 
         RuleFor(x => x.Doctor.Speciality)
             .NotEmpty()
-            .MaximumLength(150);
+            .MaximumLength(150)
+            .When(x => !string.IsNullOrWhiteSpace(x.Doctor.Speciality));
 
         RuleFor(x => x.Doctor.Person)
-            .SetValidator(new UpdatePersonRequestValidator());
+            .SetValidator(new UpdatePersonRequestValidator())
+            .When(x => x.Doctor.Person != null);
     }
 } 

@@ -12,6 +12,28 @@ builder.Services.DoctorServices();
 builder.Services.PatientServices();
 builder.Services.AppointmentServices();
 
+
+builder.Services.AddCors(options =>
+{
+    var allowedOrigins = builder.Configuration
+        .GetSection("Cors:AllowedOrigins")
+        .Get<string[]>() ?? [];
+
+    options.AddPolicy("Frontend", policy =>
+    {
+        if (allowedOrigins.Length == 0)
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        else
+            policy
+                .WithOrigins(allowedOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -25,6 +47,7 @@ app.UseSwaggerUI(
     o => o.SwaggerEndpoint("/openapi/v1.json", "Api")
 );
 
+app.UseCors("Frontend");
 app.DoctorEndpoints();
 app.PatientEndpoints();
 app.AppointmentEndpoints();

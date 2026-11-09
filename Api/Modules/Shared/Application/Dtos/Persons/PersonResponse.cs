@@ -8,7 +8,7 @@ public record PersonResponse(
     string Dni,
     string FirstName,
     string LastName,
-    DateTime? BirthDate,
+    DateOnly? BirthDate,
     PersonContactResponse Contact
 );
 

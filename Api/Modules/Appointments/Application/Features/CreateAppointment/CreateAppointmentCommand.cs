@@ -7,8 +7,8 @@ namespace Api.Modules.Appointments.Application.Features.CreateAppointment;
 public record CreateAppointmentRequest(
     Guid DoctorId,
     Guid PatientId,
-    string Date,
-    string Time,
+    DateOnly Date,
+    TimeOnly Time,
     string? Reason
 );
 
@@ -31,12 +31,10 @@ public class CreateAppointmentValidator : AbstractValidator<CreateAppointmentCom
 
         RuleFor(x => x.Request.Date)
             .NotEmpty().WithMessage("Date is required")
-            .Must(DateHelper.IsValidStringDate)
             .WithMessage("Date must be in format yyyy/mm/dd");
 
         RuleFor(x => x.Request.Time)
             .NotEmpty().WithMessage("Time is required")
-            .Must(TimeHelper.IsValidStringTime)
             .WithMessage("Time must be in format HH:mm:ss");
 
         RuleFor(x => x.Request.Reason)

@@ -8,8 +8,8 @@ namespace Api.Modules.Appointments.Application.Features.UpdateAppointment;
 public record UpdateAppointmentRequest(
     Guid? DoctorId,
     Guid? PatientId,
-    string? Date,
-    string? Time,
+    DateOnly? Date,
+    TimeOnly? Time,
     string? Reason,
     AppointmentStatus? Status
 );
@@ -42,13 +42,11 @@ public class UpdateAppointmentValidator : AbstractValidator<UpdateAppointmentCom
 
         RuleFor(x => x.Request.Date)
             .NotEmpty().WithMessage("Date is required")
-            .Must(DateHelper.IsValidStringDate)
             .WithMessage("Date must be in format yyyy-mm-dd")
             .When(x => x.Request.Date != null);
 
         RuleFor(x => x.Request.Time)
             .NotEmpty().WithMessage("Time is required")
-            .Must(TimeHelper.IsValidStringTime)
             .WithMessage("Time must be in format HH:mm:ss")
             .When(x => x.Request.Time != null);
     }

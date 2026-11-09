@@ -54,8 +54,8 @@ public class Doctor:Entity
     )
     {
         if(speciality != null) Speciality = speciality;
-        if(nRegister != null) NRegister = nRegister;
-        if(active.HasValue) Active = active.Value;
+        if(nRegister != null)  NRegister = nRegister;
+        if(active.HasValue)    Active = active.Value;
         // if(person != null) Person = person;
     }
 }

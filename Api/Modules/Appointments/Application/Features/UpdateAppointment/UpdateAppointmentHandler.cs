@@ -19,19 +19,11 @@ public class UpdateAppointmentHandler(
         
         var request = command.Request;
 
-        DateOnly? date = request.Date != null
-            ? DateOnly.Parse(request.Date) 
-            : null;
-
-        var time = request.Time != null 
-            ? TimeOnly.Parse(request.Time)
-            : (TimeOnly?)null;
-
         appointment.Update(
             request.DoctorId,
             request.PatientId,
-            date,
-            time,
+            request.Date,
+            request.Time,
             request.Reason,
             request.Status
         );

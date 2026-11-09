@@ -20,8 +20,8 @@ public class CreateAppointmentHandler(
         var newAppointment = Appointment.Create(
             data.DoctorId,
             data.PatientId,
-            DateOnly.Parse(data.Date),
-            TimeOnly.Parse(data.Time),
+            data.Date,
+            data.Time,
             data.Reason
         );
 

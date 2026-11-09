@@ -1,4 +1,3 @@
-using Api.Modules.Shared.Application.Helpers;
 using FluentValidation;
 
 namespace Api.Modules.Shared.Application.Dtos.Persons;
@@ -7,7 +6,7 @@ public record CreatePersonRequest(
     string Dni,
     string FirstName,
     string LastName,
-    string? BirthDate,
+    DateOnly? BirthDate,
     string? Phone,
     string? Email,
     string? Address
@@ -36,9 +35,10 @@ public class CreatePersonRequestValidator : AbstractValidator<CreatePersonReques
             .When(x => !string.IsNullOrEmpty(x.Phone));
 
         RuleFor(x => x.BirthDate)
-            .Must(DateHelper.IsValidStringDate)
-            .WithMessage("BirthDate must be in format yyyy-MM-dd")
-            .When(x => !string.IsNullOrWhiteSpace(x.BirthDate));
+            .NotEmpty()
+            .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today))
+            .WithMessage("BirthDate cannot be in the future")
+            .When(x => x.BirthDate.HasValue );
     }
 
 }

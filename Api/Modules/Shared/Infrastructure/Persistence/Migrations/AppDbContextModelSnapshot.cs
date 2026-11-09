@@ -153,8 +153,8 @@ namespace Api.Modules.Shared.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("BirthDate")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly?>("BirthDate")
+                        .HasColumnType("date");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

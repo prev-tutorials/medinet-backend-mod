@@ -25,15 +25,16 @@ public class UpdateDoctorHandler(
             ? Speciality.From(doctor.Speciality)
             : null;
 
-        foundDoctor.Person.Update(
-            person.Dni,
-            person.FirstName,
-            person.LastName,
-            person.BirthDate,
-            person.Email,
-            person.Phone,
-            person.Address
-        );
+        if(person != null)
+            foundDoctor.Person.Update(
+                person.Dni,
+                person.FirstName,
+                person.LastName,
+                person.BirthDate,
+                person.Email,
+                person.Phone,
+                person.Address
+            );
 
         foundDoctor.Update(
             specialityParsed,
