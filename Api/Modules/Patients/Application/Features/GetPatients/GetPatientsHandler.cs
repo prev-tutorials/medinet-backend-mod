@@ -15,12 +15,11 @@ public class GetPatientsHandler(
         CancellationToken ct
     )
     {
-        var patients = await _repository.GetAllAsync(ct);
-
-        if (query.Id != null)
-            patients = patients
-                .Where(e => e.Id == query.Id)
-                .ToArray();
+        var patients = await _repository.GetFilteredAsync(
+            query.Request.Id,
+            query.Request.Search,
+            ct
+        );
 
         return patients
             .Select(p => p.ToResponse())

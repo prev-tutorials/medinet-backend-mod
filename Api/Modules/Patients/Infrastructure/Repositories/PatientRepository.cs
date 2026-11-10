@@ -13,4 +13,31 @@ public class PatientRepository(AppDbContext context)
         => _context.Set<Patient>()
             .Include(d => d.Person)
             .ThenInclude(p => p.PersonContact);
+
+
+    public async Task<Patient[]> GetFilteredAsync(
+        Guid? id,
+        string? search,
+        CancellationToken ct
+    )
+    {
+        var query = Query().Where(p => !p.IsDeleted);
+
+        if(id != null)
+            query = query.Where(p => p.Id == id);
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var term = search.Trim();
+
+            query = query.Where(
+                p =>
+                p.Person.Dni.Contains(term) ||
+                p.Person.FirstName.Contains(term) ||
+                p.Person.LastName.Contains(term)
+            );
+        }
+
+        return await query.ToArrayAsync(ct);
+    }
 }

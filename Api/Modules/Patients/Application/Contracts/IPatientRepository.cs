@@ -4,4 +4,10 @@ using Api.Modules.Shared.Application.Contracts;
 namespace Api.Modules.Patients.Application.Contracts;
 
 public interface IPatientRepository:IRepository<Patient>
-{}
+{
+    Task<Patient[]> GetFilteredAsync(
+        Guid? id,
+        string? search,
+        CancellationToken ct
+    );
+}

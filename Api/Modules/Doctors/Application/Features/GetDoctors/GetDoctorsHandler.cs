@@ -1,5 +1,6 @@
 using Api.Modules.Doctors.Application.Contracts;
 using Api.Modules.Doctors.Application.Dtos;
+using Api.Modules.Doctors.Domain.ValueObjects;
 using MediatR;
 
 namespace Api.Modules.Doctors.Application.Features.GetDoctors;
@@ -15,14 +16,20 @@ public class GetDoctorsHandler(
         CancellationToken ct
     )
     {
-        var doctores = await _repository.GetAllAsync(ct);
+        var request = query.Request;
 
-        if(query.Id != null)
-            doctores = doctores
-                .Where(e => e.Id == query.Id)
-                .ToArray();
-        
-        return doctores
+        var speciality = string.IsNullOrWhiteSpace(request.Speciality)
+            ? null
+            : Speciality.From(request.Speciality);
+
+        var doctors = await _repository.GetFilteredAsync(
+            request.Id,
+            speciality,
+            request.Search,
+            ct
+        );
+
+        return doctors
             .Select(d => d.ToResponse())
             .ToArray();
     }

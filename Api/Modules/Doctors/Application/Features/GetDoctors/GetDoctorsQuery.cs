@@ -3,6 +3,12 @@ using MediatR;
 
 namespace Api.Modules.Doctors.Application.Features.GetDoctors;
 
+public record GetDoctorsRequest(
+    Guid? Id,
+    string? Speciality,
+    string? Search
+);
+
 public record GetDoctorsQuery(
-    Guid? Id
+    GetDoctorsRequest Request
 ) : IRequest<DoctorResponse[]>;

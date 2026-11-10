@@ -7,14 +7,13 @@ public static class GetDoctorsEndpoint
     public static void MapGetDoctors(this IEndpointRouteBuilder endpoints)
         => endpoints.MapGet("/", GetDoctors);
 
-    
     private static async Task<IResult> GetDoctors(
-        Guid? Id,
+        [AsParameters] GetDoctorsRequest request,
         ISender sender,
         CancellationToken ct
     )
     {
-        var query = new GetDoctorsQuery(Id);
+        var query = new GetDoctorsQuery(request);
         var result = await sender.Send(query, ct);
         return Results.Ok(result);
     }

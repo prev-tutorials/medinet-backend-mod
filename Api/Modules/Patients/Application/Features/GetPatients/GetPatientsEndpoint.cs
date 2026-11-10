@@ -8,12 +8,12 @@ public static class GetPatientsEndpoint
         => endpoints.MapGet("/", GetPatients);
 
     private static async Task<IResult> GetPatients(
-        Guid? Id,
+        [AsParameters] GetPatientsRequest request,
         ISender sender,
         CancellationToken ct
     )
     {
-        var query = new GetPatientsQuery(Id);
+        var query = new GetPatientsQuery(request);
         var result = await sender.Send(query, ct);
         return Results.Ok(result);
     }
