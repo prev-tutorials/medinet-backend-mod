@@ -1,5 +1,6 @@
 using Api.Modules.Shared.Application.Behaviors;
 using Api.Modules.Shared.Application.Exceptions;
+using Api.Modules.Shared.Application.Features.HealthCheck;
 using Api.Modules.Shared.Infrastructure.Persistence;
 using FluentValidation;
 using MediatR;
@@ -31,5 +32,15 @@ public static class SharedModule
         services.AddExceptionHandler<CustomExceptionHandler>();
         services.AddProblemDetails();
         return services;
+    }
+
+
+    public static IEndpointRouteBuilder SharedEndpoints(
+        this IEndpointRouteBuilder endpoints
+    )
+    {
+        endpoints.MapHealthCheck();
+
+        return endpoints;
     }
 }

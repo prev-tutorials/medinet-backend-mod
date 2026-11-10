@@ -48,6 +48,7 @@ app.UseSwaggerUI(
 );
 
 app.UseCors("Frontend");
+app.SharedEndpoints();
 app.DoctorEndpoints();
 app.PatientEndpoints();
 app.AppointmentEndpoints();
