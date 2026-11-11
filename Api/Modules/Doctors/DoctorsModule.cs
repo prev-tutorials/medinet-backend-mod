@@ -3,6 +3,7 @@ using Api.Modules.Doctors.Application.Features.CreateDoctor;
 using Api.Modules.Doctors.Application.Features.DeleteDoctor;
 using Api.Modules.Doctors.Application.Features.GetDoctors;
 using Api.Modules.Doctors.Application.Features.UpdateDoctor;
+using Api.Modules.Doctors.Infrastructure.Readers;
 using Api.Modules.Doctors.Infrastructure.Repository;
 
 namespace Api.Modules.Doctors;
@@ -14,6 +15,7 @@ public static class DoctorsModule
     )
     {
         services.AddScoped<IDoctorRepository, DoctorRepository>();
+        services.AddScoped<IDoctorReader, DoctorReader>();
         return services;
     }
     

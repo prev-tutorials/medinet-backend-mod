@@ -12,4 +12,9 @@ public interface IDoctorRepository:IRepository<Doctor>
         string? search,
         CancellationToken ct
     );
+
+    Task<Doctor[]> GetByIdsAsync(
+        IReadOnlyCollection<Guid> ids, 
+        CancellationToken ct
+    );
 }

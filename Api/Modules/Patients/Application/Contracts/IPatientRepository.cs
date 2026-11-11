@@ -10,4 +10,10 @@ public interface IPatientRepository:IRepository<Patient>
         string? search,
         CancellationToken ct
     );
+
+
+    Task<Patient[]> GetByIdsAsync(
+        IReadOnlyCollection<Guid> ids, 
+        CancellationToken ct
+    );
 }

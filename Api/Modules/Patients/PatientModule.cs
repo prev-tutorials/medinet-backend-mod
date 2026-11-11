@@ -3,6 +3,7 @@ using Api.Modules.Patients.Application.Features.CreatePatient;
 using Api.Modules.Patients.Application.Features.DeletePatient;
 using Api.Modules.Patients.Application.Features.GetPatients;
 using Api.Modules.Patients.Application.Features.UpdatePatient;
+using Api.Modules.Patients.Infrastructure.Readers;
 using Api.Modules.Patients.Infrastructure.Repositories;
 
 namespace Api.Modules.Patients;
@@ -14,6 +15,7 @@ public static class PatientModule
     )
     {
         services.AddScoped<IPatientRepository, PatientRepository>();
+        services.AddScoped<IPatientReader, PatientReader>();
         return services;
     }
 

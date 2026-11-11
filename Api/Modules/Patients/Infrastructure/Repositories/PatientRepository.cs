@@ -15,6 +15,15 @@ public class PatientRepository(AppDbContext context)
             .ThenInclude(p => p.PersonContact);
 
 
+    public async Task<Patient[]> GetByIdsAsync(
+        IReadOnlyCollection<Guid> ids, 
+        CancellationToken ct
+    )
+        => await Query()
+            .Where(d => ids.Contains(d.Id))
+            .ToArrayAsync(ct);
+
+
     public async Task<Patient[]> GetFilteredAsync(
         Guid? id,
         string? search,
