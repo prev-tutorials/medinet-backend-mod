@@ -64,6 +64,10 @@ namespace Api.Modules.Shared.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoctorId", "Date", "Time")
+                        .IsUnique()
+                        .HasFilter("[Status] <> 3 AND [IsDeleted] = 0");
+
                     b.ToTable("appointments", (string)null);
                 });
 

@@ -14,6 +14,10 @@ public class AppointmentConfiguration : IEntityTypeConfiguration<Appointment>
         builder.Property(x => x.DoctorId).IsRequired();
         builder.Property(x => x.PatientId).IsRequired();
 
+        builder.HasIndex(x => new { x.DoctorId, x.Date, x.Time })
+            .IsUnique()
+            .HasFilter("[Status] <> 3 AND [IsDeleted] = 0");
+
         builder.Property(x => x.Status)
             .HasConversion<int>()
             .IsRequired();

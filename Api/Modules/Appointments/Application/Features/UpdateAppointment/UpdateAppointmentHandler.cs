@@ -1,4 +1,6 @@
 using Api.Modules.Appointments.Application.Contracts;
+using Api.Modules.Appointments.Domain;
+using Api.Modules.Shared.Application.Exceptions;
 using MediatR;
 
 namespace Api.Modules.Appointments.Application.Features.UpdateAppointment;
@@ -10,7 +12,6 @@ public class UpdateAppointmentHandler(
 {
     private readonly IAppointmentRepository _repository = repository;
     private readonly IAppointmentService _service = service;
-
 
     public async Task<Guid> Handle(
         UpdateAppointmentCommand command,
@@ -33,6 +34,20 @@ public class UpdateAppointmentHandler(
             request.Reason,
             request.Status
         );
+
+        if (appointment.Status != AppointmentStatus.Cancelled)
+        {
+            var hasConflict = await _repository.HasConflictAsync(
+                appointment.DoctorId, 
+                appointment.Date, 
+                appointment.Time, 
+                appointment.Id, 
+                ct
+            );
+
+            if(hasConflict)
+                throw new ConflictException("Doctor already has an appointment at that date and time");
+        }
 
         var appointmentUpdated = await _repository.UpdateAsync(appointment, ct);
         return appointmentUpdated.Id;

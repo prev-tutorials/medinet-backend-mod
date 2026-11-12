@@ -62,4 +62,5 @@ public class AppointmentService(
                 throw new ValidationException("Error: patient with id not exist");
         }
     }
+
 }
