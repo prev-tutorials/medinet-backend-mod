@@ -1,20 +1,16 @@
 using Api.Modules.Appointments.Application.Contracts;
 using Api.Modules.Appointments.Application.Dtos;
-using Api.Modules.Doctors.Application.Contracts;
 using MediatR;
 
 namespace Api.Modules.Appointments.Application.Features.GetAppointments;
 
 public class GetAppointmentsHandler(
     IAppointmentRepository repository,
-    IDoctorReader doctorReader
-    // IPatientReader patientReader
+    IAppointmentService service
 ): IRequestHandler<GetAppointmentsQuery, AppointmentResponse[]>
 {
     private readonly IAppointmentRepository _repository = repository;
-    private readonly IDoctorReader _doctorReader = doctorReader;
-    // private readonly IPatientReader _patientReader = patientReader;
-
+    private readonly IAppointmentService _service = service;
 
     public async Task<AppointmentResponse[]> Handle(
         GetAppointmentsQuery query,
@@ -22,14 +18,20 @@ public class GetAppointmentsHandler(
     )
     {
         var appointments = await _repository.GetAllAsync(ct);
+
         var doctorIds  = appointments.Select(a => a.DoctorId).Distinct().ToArray();
-        var doctors  = await _doctorReader.GetByIdsAsync(doctorIds, ct);
-        // var patients = await _patientReader.GetByIdsAsync(patientIds, ct);
+        var patientIds = appointments.Select(a => a.PatientId).Distinct().ToArray();
+
+        var doctors  = await _service.GetDoctorsByIdAsync(doctorIds, ct);
+        var patients = await _service.GetPatientsByIdAsync(patientIds, ct);
+
+        var doctorsById  = doctors.ToDictionary(d => d.Id);
+        var patientsById = patients.ToDictionary(p => p.Id);
         
         return appointments
             .Select(a => a.ToResponse(
-                doctors.GetValueOrDefault(a.DoctorId)
-                // patients.GetValueOrDefault(a.PatientId)
+                doctorsById.GetValueOrDefault(a.DoctorId),
+                patientsById.GetValueOrDefault(a.PatientId)
             ))
             .ToArray();
     }

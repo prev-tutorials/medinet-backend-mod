@@ -3,6 +3,7 @@ using Api.Modules.Appointments.Application.Features.CreateAppointment;
 using Api.Modules.Appointments.Application.Features.DeleteAppointment;
 using Api.Modules.Appointments.Application.Features.GetAppointments;
 using Api.Modules.Appointments.Application.Features.UpdateAppointment;
+using Api.Modules.Appointments.Application.Services;
 using Api.Modules.Appointments.Infrastructure.Repositories;
 
 namespace Api.Modules.Appointments;
@@ -14,6 +15,7 @@ public static class AppointmentModule
     )
     {
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+        services.AddScoped<IAppointmentService, AppointmentService>();
         return services;
     }
     

@@ -9,16 +9,17 @@ public class PatientReader(
 {
     private readonly IPatientRepository _repository = repository;
 
-    public async Task<IReadOnlyDictionary<Guid, PatientResponse>> GetByIdsAsync(
-        IReadOnlyCollection<Guid> ids,
+    public async Task<PatientResponse[]> GetByIdsAsync(
+        Guid[] ids,
         CancellationToken ct
     )
     {
-        if (ids.Count == 0)
-            return new Dictionary<Guid, PatientResponse>();
+        if (ids.Length == 0) return [];
 
         var patients = await _repository.GetByIdsAsync(ids, ct);
 
-        return patients.ToDictionary(d => d.Id, d => d.ToResponse());
+        return patients
+            .Select(d => d.ToResponse())
+            .ToArray();
     }
 }

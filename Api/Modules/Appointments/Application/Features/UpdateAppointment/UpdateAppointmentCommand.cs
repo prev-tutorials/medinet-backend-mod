@@ -1,5 +1,4 @@
 using Api.Modules.Appointments.Domain;
-using Api.Modules.Shared.Application.Helpers;
 using FluentValidation;
 using MediatR;
 

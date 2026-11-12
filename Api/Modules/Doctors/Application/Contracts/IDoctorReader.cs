@@ -4,8 +4,8 @@ namespace Api.Modules.Doctors.Application.Contracts;
 
 public interface IDoctorReader
 {
-    Task<IReadOnlyDictionary<Guid, DoctorResponse>> GetByIdsAsync(
-        IReadOnlyCollection<Guid> ids, 
+    Task<DoctorResponse[]> GetByIdsAsync(
+        Guid[] ids, 
         CancellationToken ct
     );
 }
