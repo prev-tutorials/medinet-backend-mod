@@ -6,11 +6,13 @@ namespace Api.Modules.Appointments.Application.Features.GetAppointments;
 
 public class GetAppointmentsHandler(
     IAppointmentRepository repository,
-    IAppointmentService service
+    IDoctorService doctorService,
+    IPatientService patientService
 ): IRequestHandler<GetAppointmentsQuery, AppointmentResponse[]>
 {
     private readonly IAppointmentRepository _repository = repository;
-    private readonly IAppointmentService _service = service;
+    private readonly IDoctorService _doctorService = doctorService;
+    private readonly IPatientService _patientService = patientService;
 
     public async Task<AppointmentResponse[]> Handle(
         GetAppointmentsQuery query,
@@ -22,8 +24,8 @@ public class GetAppointmentsHandler(
         var doctorIds  = appointments.Select(a => a.DoctorId).Distinct().ToArray();
         var patientIds = appointments.Select(a => a.PatientId).Distinct().ToArray();
 
-        var doctors  = await _service.GetDoctorsByIdAsync(doctorIds, ct);
-        var patients = await _service.GetPatientsByIdAsync(patientIds, ct);
+        var doctors  = await _doctorService.GetDoctorsByIdAsync(doctorIds, ct);
+        var patients = await _patientService.GetPatientsByIdAsync(patientIds, ct);
 
         var doctorsById  = doctors.ToDictionary(d => d.Id);
         var patientsById = patients.ToDictionary(p => p.Id);

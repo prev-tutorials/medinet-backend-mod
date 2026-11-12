@@ -7,11 +7,13 @@ namespace Api.Modules.Appointments.Application.Features.UpdateAppointment;
 
 public class UpdateAppointmentHandler(
     IAppointmentRepository repository,
-    IAppointmentService service
+    IDoctorService doctorService,
+    IPatientService patientService
 ): IRequestHandler<UpdateAppointmentCommand, Guid>
 {
     private readonly IAppointmentRepository _repository = repository;
-    private readonly IAppointmentService _service = service;
+    private readonly IDoctorService _doctorService = doctorService;
+    private readonly IPatientService _patientService = patientService;
 
     public async Task<Guid> Handle(
         UpdateAppointmentCommand command,
@@ -23,8 +25,8 @@ public class UpdateAppointmentHandler(
         
         var request = command.Request;
 
-        await _service.DoctorExist(request.DoctorId, ct);
-        await _service.PatientExist(request.PatientId, ct);
+        await _doctorService.DoctorExist(request.DoctorId, ct);
+        await _patientService.PatientExist(request.PatientId, ct);
 
         appointment.Update(
             request.DoctorId,

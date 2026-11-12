@@ -7,11 +7,14 @@ namespace Api.Modules.Appointments.Application.Features.CreateAppointment;
 
 public class CreateAppointmentHandler(
     IAppointmentRepository repository,
-    IAppointmentService service
+    IDoctorService doctorService,
+    IPatientService patientService
 ): IRequestHandler<CreateAppointmentCommand, Guid>
 {
     private readonly IAppointmentRepository _repository = repository;
-    private readonly IAppointmentService _service = service;
+    private readonly IDoctorService _doctorService = doctorService;
+    private readonly IPatientService _patientService = patientService;
+
 
     public async Task<Guid> Handle(
         CreateAppointmentCommand command,
@@ -20,8 +23,8 @@ public class CreateAppointmentHandler(
     {
         var data = command.Request;
 
-        await _service.DoctorExist(data.DoctorId, ct);
-        await _service.PatientExist(data.PatientId, ct);
+        await _doctorService.DoctorExist(data.DoctorId, ct);
+        await _patientService.PatientExist(data.PatientId, ct);
 
         var hasConflict = await _repository.HasConflictAsync(
             data.DoctorId, 

@@ -1,6 +1,4 @@
 using Api.Modules.Appointments.Domain;
-using Api.Modules.Doctors.Application.Dtos;
-using Api.Modules.Patients.Application.Dtos;
 
 namespace Api.Modules.Appointments.Application.Dtos;
 
