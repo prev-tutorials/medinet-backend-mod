@@ -8,12 +8,12 @@ public static class GetAppointmentsEndpoint
         => endpoints.MapGet("/", GetAppointments);
 
     private static async Task<IResult> GetAppointments(
-        [AsParameters] Guid Id,
+        [AsParameters] GetAppointmentsRequest request,
         ISender sender,
         CancellationToken ct
     )
     {
-        var query = new GetAppointmentsQuery(Id);
+        var query = new GetAppointmentsQuery(request);
         var result = await sender.Send(query, ct);
         return Results.Ok(result);
     }

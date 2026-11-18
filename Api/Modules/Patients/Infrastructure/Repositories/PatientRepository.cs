@@ -26,6 +26,7 @@ public class PatientRepository(AppDbContext context)
 
     public async Task<Patient[]> GetFilteredAsync(
         Guid? id,
+        string? dni,
         string? search,
         CancellationToken ct
     )
@@ -34,6 +35,9 @@ public class PatientRepository(AppDbContext context)
 
         if(id != null)
             query = query.Where(p => p.Id == id);
+
+        if (!string.IsNullOrWhiteSpace(dni))
+            query = query.Where(p => p.Person.Dni == dni.Trim());
 
         if (!string.IsNullOrWhiteSpace(search))
         {

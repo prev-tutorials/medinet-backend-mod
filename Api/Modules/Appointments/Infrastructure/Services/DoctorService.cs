@@ -28,6 +28,22 @@ public class DoctorService(IDoctorReader doctorReader) : IDoctorService
     }
 
 
+    public async Task<DoctorResponse[]> GetDoctorsBySpecialityAsync(
+        string speciality,
+        CancellationToken ct
+    )
+    {
+        var doctors = await _doctorReader.GetBySpecialityAsync(speciality, ct);
+        return doctors.Select(d => new DoctorResponse(
+            d.Id,
+            d.Speciality,
+            d.NRegister,
+            d.Active,
+            d.Person
+        )).ToArray();
+    }
+
+
     public async Task DoctorExist(
         Guid? doctorId,
         CancellationToken ct

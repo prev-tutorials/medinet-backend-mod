@@ -8,4 +8,9 @@ public interface IDoctorReader
         Guid[] ids, 
         CancellationToken ct
     );
+
+    Task<DoctorResponse[]> GetBySpecialityAsync(
+        string speciality,
+        CancellationToken ct
+    );
 }

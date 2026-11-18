@@ -7,6 +7,7 @@ public interface IPatientRepository:IRepository<Patient>
 {
     Task<Patient[]> GetFilteredAsync(
         Guid? id,
+        string? dni,
         string? search,
         CancellationToken ct
     );

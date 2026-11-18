@@ -5,6 +5,7 @@ namespace Api.Modules.Patients.Application.Features.GetPatients;
 
 public record GetPatientsRequest(
     Guid? Id,
+    string? Dni,
     string? Search
 );
 

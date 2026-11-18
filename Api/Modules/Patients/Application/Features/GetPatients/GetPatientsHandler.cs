@@ -17,6 +17,7 @@ public class GetPatientsHandler(
     {
         var patients = await _repository.GetFilteredAsync(
             query.Request.Id,
+            query.Request.Dni,
             query.Request.Search,
             ct
         );

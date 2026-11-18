@@ -9,6 +9,11 @@ public interface IDoctorService
         CancellationToken ct
     );
 
+    Task<DoctorResponse[]> GetDoctorsBySpecialityAsync(
+        string speciality,
+        CancellationToken ct
+    );
+
     Task DoctorExist(
         Guid? doctorId,
         CancellationToken ct

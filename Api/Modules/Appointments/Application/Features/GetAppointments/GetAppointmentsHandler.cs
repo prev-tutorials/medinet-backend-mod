@@ -19,7 +19,15 @@ public class GetAppointmentsHandler(
         CancellationToken ct
     )
     {
-        var appointments = await _repository.GetAllAsync(ct);
+        var request = query.Request;
+        
+        var appointments = await _repository.GetFilteredAsync(
+            request.Id,
+            request.DoctorId,
+            request.PatientId,
+            request.Search,
+            ct
+        );
 
         var doctorIds  = appointments.Select(a => a.DoctorId).Distinct().ToArray();
         var patientIds = appointments.Select(a => a.PatientId).Distinct().ToArray();

@@ -18,13 +18,14 @@ public class DoctorRepository(AppDbContext context)
             .ThenInclude(p => p.PersonContact);
 
 
+
     public async Task<Doctor[]> GetByIdsAsync(
         IReadOnlyCollection<Guid> ids, 
         CancellationToken ct
-    )
-        => await Query()
+    )=> await Query()
             .Where(d => ids.Contains(d.Id))
             .ToArrayAsync(ct);
+
 
 
     public async Task<Doctor[]> GetFilteredAsync(
