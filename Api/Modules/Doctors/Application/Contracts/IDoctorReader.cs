@@ -1,4 +1,5 @@
 using Api.Modules.Doctors.Application.Dtos;
+using Api.Modules.Doctors.Domain.ValueObjects;
 
 namespace Api.Modules.Doctors.Application.Contracts;
 
@@ -9,8 +10,10 @@ public interface IDoctorReader
         CancellationToken ct
     );
 
-    Task<DoctorResponse[]> GetBySpecialityAsync(
-        string speciality,
+    Task<DoctorResponse[]> GetFilteredAsync(
+        Guid? id,
+        Speciality? speciality,
+        string? search,
         CancellationToken ct
     );
 }

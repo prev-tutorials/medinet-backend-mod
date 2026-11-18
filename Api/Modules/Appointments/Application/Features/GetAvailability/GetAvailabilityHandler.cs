@@ -34,8 +34,10 @@ public class GetAvailabilityHandler(
 
         var date = request.Date.Value;
 
-        var doctors = await _doctorService.GetDoctorsBySpecialityAsync(
+        var doctors = await _doctorService.GetFilteredAsync(
+            null,
             request.Speciality,
+            null,
             ct
         );
 

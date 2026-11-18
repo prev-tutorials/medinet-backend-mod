@@ -25,15 +25,17 @@ public class DoctorReader(
     }
 
 
-    public async Task<DoctorResponse[]> GetBySpecialityAsync(
-        string speciality,
+    public async Task<DoctorResponse[]> GetFilteredAsync(
+        Guid? id,
+        Speciality? speciality,
+        string? search,
         CancellationToken ct
     )
     {
         var doctors = await _repository.GetFilteredAsync(
-            null,
-            Speciality.From(speciality),
-            null,
+            id,
+            speciality,
+            search,
             ct
         );
 

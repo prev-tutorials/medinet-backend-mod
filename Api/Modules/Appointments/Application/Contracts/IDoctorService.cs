@@ -9,8 +9,10 @@ public interface IDoctorService
         CancellationToken ct
     );
 
-    Task<DoctorResponse[]> GetDoctorsBySpecialityAsync(
-        string speciality,
+    Task<DoctorResponse[]> GetFilteredAsync(
+        Guid? id,
+        string? speciality,
+        string? search,
         CancellationToken ct
     );
 
